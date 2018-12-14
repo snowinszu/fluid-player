@@ -109,7 +109,7 @@ var fluidPlayerClass = {
         'toggleElementText', 'getMobileOs', 'findClosestParent', 'activeVideoPlayerId',
         'getInstanceIdByWrapperId', 'timer', 'timerPool', 'adList', 'adPool',
         'isUserActive', 'isCurrentlyPlayingAd', 'initialAnimationSet'],
-    version: '2.4.3',
+    version: '2.4.4',
     homepage: 'https://www.fluidplayer.com/',
     activeVideoPlayerId: null,
 
@@ -4126,6 +4126,19 @@ var fluidPlayerClass = {
         if (player.displayOptions.layoutControls.allowDownload) {
             downloadClick = document.createElement('a');
             downloadClick.id = this.videoPlayerId + '_download';
+            downloadClick.onclick = function(e) {
+                var linkItem = this;
+
+                if (typeof e.stopImmediatePropagation !== 'undefined') {
+                    e.stopImmediatePropagation();
+                }
+
+                setInterval(function() {
+                    linkItem.download = '';
+                    linkItem.href = '';
+                }, 100);
+            };
+
             downloadOption.appendChild(downloadClick);
 
             downloadOption.addEventListener('click', function() {
